@@ -1,6 +1,6 @@
 {
     "name": "laravel-notification-channels/interfax",
-    "description": "This package makes it easy to send PDFs as faxes via InterFAX with Laravel notifications",
+    "description": "This package makes it easy to send files as faxes via InterFAX with Laravel notifications",
     "homepage": "https://github.com/laravel-notification-channels/interfax",
     "license": "MIT",
     "authors": [
