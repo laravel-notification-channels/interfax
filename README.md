@@ -41,9 +41,9 @@ This channel will use your InterFAX username and password. To use the channel, a
 ```php
 ...
 'interfax' => [
-  'username' => env('INTERFAX_USERNAME'),
-  'password' => env('INTERFAX_PASSWORD'),
-  'pci'      => env('INTERFAX_PCI', false),
+    'username' => env('INTERFAX_USERNAME'),
+    'password' => env('INTERFAX_PASSWORD'),
+    'pci'      => env('INTERFAX_PCI', false),
 ],
 ...
 ```
@@ -68,7 +68,7 @@ class DocumentWasSent extends Notification
 
     public function __construct(array $files)
     {
-    $this->files = $files;
+        $this->files = $files;
     }
 
     /**
