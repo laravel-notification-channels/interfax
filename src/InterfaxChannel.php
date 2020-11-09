@@ -37,7 +37,6 @@ class InterfaxChannel
         ]);
 
         if ($message->shouldCheckStatus()) {
-
             while ($fax->refresh()->status < 0) {
                 sleep(config('services.interfax.interval', 15));
             }
