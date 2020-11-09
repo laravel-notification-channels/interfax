@@ -1,4 +1,4 @@
-# InterFAX notification channel for Laravel 5.8+ and 6.x
+# InterFAX notification channel for Laravel 6.x, 7.x and 8.x
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/interfax.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/interfax)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -8,7 +8,7 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/interfax/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/interfax/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/interfax.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/interfax)
 
-This package makes it easy to send notifications using [InterFAX](https://interfax.net) with Laravel 5.8+ and 6.x.
+This package makes it easy to send notifications using [InterFAX](https://interfax.net) with Laravel 6.x and above.
 
 ## Contents
 
