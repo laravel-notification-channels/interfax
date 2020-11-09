@@ -36,15 +36,15 @@ class InterfaxChannel
             'files' => $message->makeFiles(),
         ]);
 
-        if ($message->shouldCheckStatus()):
+        if ($message->shouldCheckStatus()) {
 
             while ($fax->refresh()->status < 0) {
                 sleep(config('services.interfax.interval', 15));
             }
 
-        if ($fax->refresh()->status > 0) {
-            throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes());
+            if ($fax->refresh()->status > 0) {
+                throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes());
+            }
         }
-        endif;
     }
 }
