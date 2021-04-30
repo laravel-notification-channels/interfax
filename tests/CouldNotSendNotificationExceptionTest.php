@@ -30,6 +30,30 @@ class CouldNotSendNotificationExceptionTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_the_default_exception_message()
+    {
+        $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
+            'status' => 500,
+            'message' => 'Failed to send.',
+        ]);
+
+        $this->assertSame('The fax failed to send via InterFAX.', $exception->getMessage());
+    }
+
+    /** @test */
+    public function it_can_get_a_custom_exception_message()
+    {
+        $exceptionMessage = 'This is a test.';
+
+        $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
+            'status' => 500,
+            'message' => 'Failed to send.',
+        ], $exceptionMessage);
+
+        $this->assertSame($exceptionMessage, $exception->getMessage());
+    }
+
+    /** @test */
     public function it_can_get_the_exception_attributes()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
