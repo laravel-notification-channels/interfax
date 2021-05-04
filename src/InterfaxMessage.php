@@ -16,6 +16,9 @@ class InterfaxMessage
     const FILES = 'files';
     const STREAM = 'stream';
 
+    const POLLING_INTERVAL_DEFAULT = 15;
+    const POLLING_INTERVAL_MINIMUM = 10;
+
     public function file(string $file)
     {
         $this->files = Arr::wrap($file);
@@ -80,5 +83,11 @@ class InterfaxMessage
         }
 
         return $this->files;
+    }
+
+    public function sleep() : void
+    {
+        $interval = config('services.interfax.interval', static::POLLING_INTERVAL_DEFAULT);
+        sleep(max($interval, static::POLLING_INTERVAL_MINIMUM));
     }
 }
