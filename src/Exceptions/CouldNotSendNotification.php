@@ -18,7 +18,7 @@ class CouldNotSendNotification extends Exception
         $this->responseAttributes = $responseAttributes;
     }
 
-    public static function serviceRespondedWithAnError($message, $responseAttributes, string $exceptionMessage='The fax failed to send via InterFAX.')
+    public static function serviceRespondedWithAnError($message, $responseAttributes, string $exceptionMessage = 'The fax failed to send via InterFAX.')
     {
         return new static($exceptionMessage, $responseAttributes['status'], null, $message, $responseAttributes);
     }

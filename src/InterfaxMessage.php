@@ -85,7 +85,7 @@ class InterfaxMessage
         return $this->files;
     }
 
-    public function sleep() : void
+    public function sleep(): void
     {
         $interval = config('services.interfax.interval', static::POLLING_INTERVAL_DEFAULT);
         sleep(max($interval, static::POLLING_INTERVAL_MINIMUM));
