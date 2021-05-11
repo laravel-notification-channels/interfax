@@ -31,19 +31,26 @@ class InterfaxChannel
 
         $message = $notification->toInterfax($notifiable);
 
-        $fax = $this->client->deliver([
-            'faxNumber' => $faxNumber,
-            'files' => $message->makeFiles(),
-        ]);
+        try {
+            $fax = $this->client->deliver([
+                'faxNumber' => $faxNumber,
+                'files' => $message->makeFiles(),
+            ]);
 
-        if ($message->shouldCheckStatus()) {
-            while ($fax->refresh()->status < 0) {
-                sleep(config('services.interfax.interval', 15));
-            }
+            if ($message->shouldCheckStatus()) {
+                $message->sleep();
 
-            if ($fax->refresh()->status > 0) {
-                throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes());
+                while ($fax->refresh()->status < 0) {
+                    $message->sleep();
+                }
+
+                if ($fax->refresh()->status > 0) {
+                    throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes());
+                }
             }
+        } catch (\Interfax\Exception\RequestException $e) {
+            $exceptionMessage = $e->getMessage().': '.($e->getWrappedException())->getMessage();
+            throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes(), $exceptionMessage);
         }
     }
 }

@@ -44,11 +44,14 @@ This channel will use your InterFAX username and password. To use the channel, a
     'username' => env('INTERFAX_USERNAME'),
     'password' => env('INTERFAX_PASSWORD'),
     'pci'      => env('INTERFAX_PCI', false),
+    'interval' => 15,
 ],
 ...
 ```
 
 This will load your InterFAX credentials from the `.env` file. If your requests must be PCI-DSS-compliant, set `INTERFAX_PCI=true` in your `.env` file.
+
+The `services.interfax.interval` setting is the polling interval, in seconds, for a fax if it is set to check the status until it is complete. This is optional and will default to 15 if left empty. The interval has a minimum of 10 seconds, as the outbound service in the API has a maximum freqncy of 6 requests per minute and can return errors if polled more frequently.
 
 ## Usage
 
