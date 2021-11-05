@@ -51,7 +51,7 @@ class InterfaxChannel
             }
         } catch (\Interfax\Exception\RequestException $e) {
             $exceptionMessage = $e->getMessage().': '.($e->getWrappedException())->getMessage();
-            $attributes = $this->fax ? $this->fax->refresh()->attributes() : $e->getStatusCode();
+            $attributes = $this->fax ? $this->fax->refresh()->attributes() : ['status' => $e->getStatusCode()];
 
             throw CouldNotSendNotification::serviceRespondedWithAnError($message, $attributes, $exceptionMessage);
         }
