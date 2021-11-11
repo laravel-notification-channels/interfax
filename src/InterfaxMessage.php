@@ -58,6 +58,7 @@ class InterfaxMessage
 
     /**
      * Set a user who can be notified in case the fax fails to send.
+     *
      * @param  mixed  $notifiable  The user to notify
      * @return InterfaxMessage
      */

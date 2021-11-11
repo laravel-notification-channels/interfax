@@ -169,6 +169,7 @@ class TestNotificationWithSingleFile extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
