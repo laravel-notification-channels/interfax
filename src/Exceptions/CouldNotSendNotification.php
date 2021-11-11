@@ -28,6 +28,11 @@ class CouldNotSendNotification extends Exception
         return $this->interfaxMessage->user;
     }
 
+    public function getMetadata()
+    {
+        return $this->interfaxMessage->metadata;
+    }
+
     public function getAttributes()
     {
         return $this->responseAttributes;

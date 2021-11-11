@@ -12,6 +12,7 @@ class InterfaxMessage
     protected $method;
     protected $statusCheck = false;
     public $user;
+    public $metadata = [];
 
     const FILES = 'files';
     const STREAM = 'stream';
@@ -65,6 +66,21 @@ class InterfaxMessage
     public function user($notifiable)
     {
         $this->user = $notifiable;
+
+        return $this;
+    }
+
+    /**
+     * Add metadata to the message for logging purposes.
+     *
+     * @param  array  $data  The data to add to the metadata array
+     * @return InterfaxMessage
+     */
+    public function addMetadata(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->metadata[$key] = $value;
+        }
 
         return $this;
     }

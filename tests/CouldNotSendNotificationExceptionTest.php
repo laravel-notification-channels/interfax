@@ -13,6 +13,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
     {
         parent::setUp();
         $this->message = (new InterfaxMessage)
+                            ->addMetadata(['key' => 'Some sample metadata.'])
                             ->checkStatus()
                             ->user(new TestNotifiable)
                             ->file('test-file.pdf');
@@ -27,6 +28,17 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         ]);
 
         $this->assertInstanceOf(TestNotifiable::class, $exception->getUser());
+    }
+
+    /** @test */
+    public function it_can_get_the_exception_metadata()
+    {
+        $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
+            'status' => 500,
+            'message' => 'Failed to send.',
+        ]);
+
+        $this->assertSame('Some sample metadata.', $exception->getMetadata()['key']);
     }
 
     /** @test */
