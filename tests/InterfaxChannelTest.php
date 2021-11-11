@@ -184,6 +184,7 @@ class TestNotificationWithFiles extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -199,6 +200,7 @@ class TestNotificationAsStreamPdf extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -216,6 +218,7 @@ class TestNotificationAsStreamHtml extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -233,6 +236,7 @@ class TestNotificationWithRefresh extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
