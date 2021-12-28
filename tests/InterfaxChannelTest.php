@@ -152,9 +152,15 @@ class InterfaxChannelTest extends TestCase
     {
         $this->expectException(CouldNotSendNotification::class);
 
+        $testResource = new TestResource;
+
         $this->resource
              ->shouldReceive('refresh')
-             ->andReturn(new TestResource);
+             ->andReturn($testResource);
+
+        $this->resource
+             ->shouldReceive('attributes')
+             ->andReturn($testResource->attributes());
 
         $this->interfax
              ->shouldReceive('deliver')

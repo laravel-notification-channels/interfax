@@ -46,12 +46,12 @@ class InterfaxChannel
                 }
 
                 if ($this->fax->refresh()->status > 0) {
-                    throw CouldNotSendNotification::serviceRespondedWithAnError($message, $this->fax->refresh()->attributes());
+                    throw CouldNotSendNotification::serviceRespondedWithAnError($message, $this->fax->attributes());
                 }
             }
         } catch (\Interfax\Exception\RequestException $e) {
             $exceptionMessage = $e->getMessage().': '.($e->getWrappedException())->getMessage();
-            $attributes = $this->fax ? $this->fax->refresh()->attributes() : ['status' => $e->getStatusCode()];
+            $attributes = $this->fax ? $this->fax->attributes() : ['status' => $e->getStatusCode()];
 
             throw CouldNotSendNotification::serviceRespondedWithAnError($message, $attributes, $exceptionMessage);
         }
