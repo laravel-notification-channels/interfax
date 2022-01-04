@@ -9,6 +9,7 @@ use NotificationChannels\Interfax\Exceptions\CouldNotSendNotification;
 class InterfaxChannel
 {
     protected $client;
+    protected $fax;
 
     public function __construct(Client $client)
     {
@@ -18,8 +19,8 @@ class InterfaxChannel
     /**
      * Send the given notification.
      *
-     * @param mixed $notifiable
-     * @param \Illuminate\Notifications\Notification $notification
+     * @param  mixed  $notifiable
+     * @param  \Illuminate\Notifications\Notification  $notification
      *
      * @throws \NotificationChannels\Interfax\Exceptions\CouldNotSendNotification
      */
@@ -32,7 +33,7 @@ class InterfaxChannel
         $message = $notification->toInterfax($notifiable);
 
         try {
-            $fax = $this->client->deliver([
+            $this->fax = $this->client->deliver([
                 'faxNumber' => $faxNumber,
                 'files' => $message->makeFiles(),
             ]);
@@ -40,17 +41,19 @@ class InterfaxChannel
             if ($message->shouldCheckStatus()) {
                 $message->sleep();
 
-                while ($fax->refresh()->status < 0) {
+                while ($this->fax->refresh()->status < 0) {
                     $message->sleep();
                 }
 
-                if ($fax->refresh()->status > 0) {
-                    throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes());
+                if ($this->fax->refresh()->status > 0) {
+                    throw CouldNotSendNotification::serviceRespondedWithAnError($message, $this->fax->attributes());
                 }
             }
         } catch (\Interfax\Exception\RequestException $e) {
             $exceptionMessage = $e->getMessage().': '.($e->getWrappedException())->getMessage();
-            throw CouldNotSendNotification::serviceRespondedWithAnError($message, $fax->refresh()->attributes(), $exceptionMessage);
+            $attributes = $this->fax ? $this->fax->attributes() : ['status' => $e->getStatusCode()];
+
+            throw CouldNotSendNotification::serviceRespondedWithAnError($message, $attributes, $exceptionMessage);
         }
     }
 }

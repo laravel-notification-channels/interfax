@@ -12,6 +12,7 @@ class InterfaxMessage
     protected $method;
     protected $statusCheck = false;
     public $user;
+    public $metadata = [];
 
     const FILES = 'files';
     const STREAM = 'stream';
@@ -58,12 +59,28 @@ class InterfaxMessage
 
     /**
      * Set a user who can be notified in case the fax fails to send.
-     * @param  mixed $notifiable [description]
+     *
+     * @param  mixed  $notifiable  The user to notify
      * @return InterfaxMessage
      */
     public function user($notifiable)
     {
         $this->user = $notifiable;
+
+        return $this;
+    }
+
+    /**
+     * Add metadata to the message for logging purposes.
+     *
+     * @param  array  $data  The data to add to the metadata array
+     * @return InterfaxMessage
+     */
+    public function addMetadata(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->metadata[$key] = $value;
+        }
 
         return $this;
     }

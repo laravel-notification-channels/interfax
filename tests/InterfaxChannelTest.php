@@ -152,9 +152,15 @@ class InterfaxChannelTest extends TestCase
     {
         $this->expectException(CouldNotSendNotification::class);
 
+        $testResource = new TestResource;
+
         $this->resource
              ->shouldReceive('refresh')
-             ->andReturn(new TestResource);
+             ->andReturn($testResource);
+
+        $this->resource
+             ->shouldReceive('attributes')
+             ->andReturn($testResource->attributes());
 
         $this->interfax
              ->shouldReceive('deliver')
@@ -169,6 +175,7 @@ class TestNotificationWithSingleFile extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -184,6 +191,7 @@ class TestNotificationWithFiles extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -199,6 +207,7 @@ class TestNotificationAsStreamPdf extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -216,6 +225,7 @@ class TestNotificationAsStreamHtml extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
@@ -233,6 +243,7 @@ class TestNotificationWithRefresh extends Notification
     /**
      * @param $notifiable
      * @return InterfaxMessage
+     *
      * @throws CouldNotSendNotification
      */
     public function toInterfax($notifiable)
