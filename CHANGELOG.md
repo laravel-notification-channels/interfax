@@ -2,6 +2,12 @@
 
 All notable changes to the `InterFAX notification channel` will be documented in this file.
 
+## 2.2.0 - 2022-01-04
+
+- Add support for PHP 8.0 & 8.1
+- Improve error handling
+- Add `addMetadata` method to add array of data to be used for error logging purposes
+
 ## 2.1.1 - 2021-05-12
 
 - Prevent API limit requests with updates to status polling
