@@ -93,18 +93,38 @@ class InterfaxMessage
                     $this->stream,
                     [
                         'name' => $this->filename,
-                        'mime_type' => app('filesystem')->mimeType(pathinfo($this->filename, PATHINFO_BASENAME)),
+                        'mime_type' => app('files')->mimeType($this->filename),
+                        'chunk_size' => config('services.interfax.chunk_size', 1048576),
                     ],
                 ],
             ];
         }
 
-        return $this->files;
+        return array_map('static::setChunkSize', $this->files);
     }
 
     public function sleep(): void
     {
         $interval = config('services.interfax.interval', static::POLLING_INTERVAL_DEFAULT);
         sleep(max($interval, static::POLLING_INTERVAL_MINIMUM));
+    }
+
+    protected static function setChunkSize($file)
+    {
+        $chunk_size = config('services.interfax.chunk_size', 1048576);
+
+        if (is_string($file)) {
+            return [
+                'location' => $file,
+                'params' => [
+                    'chunk_size' => $chunk_size,
+                ],
+            ];
+        } elseif (is_array($file)) {
+            $file['params']['chunk_size'] = $chunk_size;
+            return $file;
+        } else {
+            return $file;
+        }
     }
 }

@@ -41,7 +41,14 @@ class InterfaxChannelTest extends TestCase
             ->once()
             ->with([
                 'faxNumber' => '12345678901',
-                'files' => ['test-file.pdf'],
+                'files' => [
+                    [
+                        'location' => 'test-file.pdf',
+                        'params' => [
+                            'chunk_size' => $this->chunkSize,
+                        ],
+                    ],
+                ],
             ]);
 
         $this->channel->send(new TestNotifiable, new TestNotificationWithSingleFile);
@@ -54,7 +61,20 @@ class InterfaxChannelTest extends TestCase
             ->once()
             ->with([
                 'faxNumber' => '12345678901',
-                'files' => ['test-file-1.pdf', 'test-file-2.pdf'],
+                'files' => [
+                    [
+                        'location' => 'test-file-1.pdf',
+                        'params' => [
+                            'chunk_size' => $this->chunkSize,
+                        ],
+                    ],
+                    [
+                        'location' => 'test-file-2.pdf',
+                        'params' => [
+                            'chunk_size' => $this->chunkSize,
+                        ],
+                    ],
+                ],
             ]);
 
         $this->channel->send(new TestNotifiable, new TestNotificationWithFiles);
