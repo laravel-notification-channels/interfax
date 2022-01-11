@@ -56,7 +56,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         $this->testFiles[] = $filename;
     }
 
-    protected function increaseChunkSize(int $size=8000000)
+    protected function increaseChunkSize(int $size = 8000000)
     {
         $this->chunkSize = $size;
         config(['services.interfax.chunk_size' => $this->chunkSize]);

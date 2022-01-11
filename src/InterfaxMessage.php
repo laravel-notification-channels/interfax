@@ -122,6 +122,7 @@ class InterfaxMessage
             ];
         } elseif (is_array($file)) {
             $file['params']['chunk_size'] = $chunk_size;
+
             return $file;
         } else {
             return $file;

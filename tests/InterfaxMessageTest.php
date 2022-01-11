@@ -45,7 +45,7 @@ class InterfaxMessageTest extends TestCase
 
         $message = (new InterfaxMessage)
                         ->user(new TestNotifiable)
-                        ->file(__DIR__ . '/resources/test.pdf');
+                        ->file(__DIR__.'/resources/test.pdf');
 
         $files = $message->makeFiles();
         $delivery = new \Interfax\Outbound\Delivery(new \Interfax\Client, ['faxNumber'=>'0000000000', 'files'=>$files]);
@@ -60,7 +60,7 @@ class InterfaxMessageTest extends TestCase
 
         $message = (new InterfaxMessage)
                         ->user(new TestNotifiable)
-                        ->files([['location' => __DIR__ . '/resources/test.pdf']]);
+                        ->files([['location' => __DIR__.'/resources/test.pdf']]);
 
         $files = $message->makeFiles();
         $delivery = new \Interfax\Outbound\Delivery(new \Interfax\Client, ['faxNumber'=>'0000000000', 'files'=>$files]);
@@ -74,7 +74,7 @@ class InterfaxMessageTest extends TestCase
         $this->increaseChunkSize();
         $client = new \Interfax\Client;
 
-        $file = new \NotificationChannels\Interfax\InterfaxFile($client, __DIR__ . '/resources/test.pdf');
+        $file = new \NotificationChannels\Interfax\InterfaxFile($client, __DIR__.'/resources/test.pdf');
 
         $message = (new InterfaxMessage)
                         ->user(new TestNotifiable)

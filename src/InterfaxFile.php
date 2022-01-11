@@ -6,8 +6,10 @@ class InterfaxFile extends \Interfax\File
 {
     /**
      * File constructor.
+     *
      * @param $location
-     * @param array $params
+     * @param  array  $params
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(\Interfax\Client $client, $location, $params = [], \Interfax\GenericFactory $factory = null)
