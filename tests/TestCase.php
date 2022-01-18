@@ -12,6 +12,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         'test-file-2.pdf',
     ];
 
+    protected $chunkSize = 1048576;
+
     protected function getPackageProviders($app)
     {
         config([
@@ -52,6 +54,12 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function addFile(string $filename): void
     {
         $this->testFiles[] = $filename;
+    }
+
+    protected function increaseChunkSize(int $size = 8000000)
+    {
+        $this->chunkSize = $size;
+        config(['services.interfax.chunk_size' => $this->chunkSize]);
     }
 }
 
