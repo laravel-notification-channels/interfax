@@ -20,6 +20,8 @@ class InterfaxMessage
     const POLLING_INTERVAL_DEFAULT = 15;
     const POLLING_INTERVAL_MINIMUM = 10;
 
+    protected static $DEFAULT_CHUNK_SIZE = 1048576;
+
     public function file(string $file)
     {
         $this->files = Arr::wrap($file);
@@ -94,7 +96,7 @@ class InterfaxMessage
                     [
                         'name' => $this->filename,
                         'mime_type' => app('files')->mimeType($this->filename),
-                        'chunk_size' => config('services.interfax.chunk_size', 1048576),
+                        'chunk_size' => config('services.interfax.chunk_size', static::$DEFAULT_CHUNK_SIZE),
                     ],
                 ],
             ];
@@ -111,7 +113,7 @@ class InterfaxMessage
 
     protected static function setChunkSize($file)
     {
-        $chunk_size = config('services.interfax.chunk_size', 1048576);
+        $chunk_size = config('services.interfax.chunk_size', static::$DEFAULT_CHUNK_SIZE);
 
         if (is_string($file)) {
             return [
