@@ -45,13 +45,16 @@ This channel will use your InterFAX username and password. To use the channel, a
     'password' => env('INTERFAX_PASSWORD'),
     'pci'      => env('INTERFAX_PCI', false),
     'interval' => 15,
+    'chunk_size' => null,
 ],
 ...
 ```
 
 This will load your InterFAX credentials from the `.env` file. If your requests must be PCI-DSS-compliant, set `INTERFAX_PCI=true` in your `.env` file.
 
-The `services.interfax.interval` setting is the polling interval, in seconds, for a fax if it is set to check the status until it is complete. This is optional and will default to 15 if left empty. The interval has a minimum of 10 seconds, as the outbound service in the API has a maximum freqncy of 6 requests per minute and can return errors if polled more frequently.
+The `services.interfax.interval` configuration setting is the polling interval, in seconds, for a fax if it is set to check the status until it is complete. This is optional and will default to 15 if left empty. The interval has a minimum of 10 seconds, as the outbound service in the API has a maximum freqncy of 6 requests per minute and can return errors if polled more frequently.
+
+The `services.interfax.chunk_size` configuration setting is the maximum file size before the InterFAX core SDK starts chunking files. The default chunk size is 1048576. When chunking, an `\Interfax\Document` object is created, but the `/outbound/documents` endpoint does not exist for the PCI-DSS-compliant API. If `services.interfax.pci` is set to `true`, it is recommended to increase the chunk size to avoid 404 errors.
 
 ## Usage
 
@@ -108,8 +111,8 @@ public function routeNotificationForInterfax($notification)
 ### Available Message methods
 
 `file(string $file)` : Accepts the full path to a single file (full list of supported file types [found here](https://www.interfax.net/en/help/supported_file_types)).  
-`files(array $array)` : Accepts an array of file paths.  
-`stream(Filestream $stream, string $name)` : Accepts a file stream.
+`files(array $array)` : Accepts an array of file paths.  If overriding the default chunk_size in the config and using an `\Interfax\File` object in the array, use `\NotificationChannels\Interfax\InterfaxFile` instead to automatically set the file's chunk size on initialization.  
+`stream(Filestream $stream, string $name)` : Accepts a file stream.  
 `addMetadata(array $data)`: Add metadata for logging purposes in case of an error.
 
 ## Changelog
