@@ -2,6 +2,10 @@
 
 All notable changes to the `InterFAX notification channel` will be documented in this file.
 
+## 2.3.0 - 2022-01-18
+
+- Add functionality for overriding default file size where fax documents start chunking
+
 ## 2.2.0 - 2022-01-04
 
 - Add support for PHP 8.0 & 8.1
