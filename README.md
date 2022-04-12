@@ -1,4 +1,4 @@
-# InterFAX notification channel for Laravel 6.x, 7.x and 8.x
+# InterFAX notification channel for Laravel 6.x/7.x/8.x/9.x
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/interfax.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/interfax)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
