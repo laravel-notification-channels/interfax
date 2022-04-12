@@ -16,9 +16,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 7.4
+          php-version: 8.1
           tools: composer:v2
           coverage: pcov
+
+      - name: Install scrutinizer/ocular
+        run: composer global require scrutinizer/ocular
 
       - name: Install dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
@@ -27,6 +30,4 @@ jobs:
         run: vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.clover
 
       - name: Send coverage to Scrutinizer
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        run: ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
