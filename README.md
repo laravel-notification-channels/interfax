@@ -54,6 +54,8 @@ This will load your InterFAX credentials from the `.env` file. If your requests 
 
 The `services.interfax.interval` configuration setting is the polling interval, in seconds, for a fax if it is set to check the status until it is complete. This is optional and will default to 15 if left empty. The interval has a minimum of 10 seconds, as the outbound service in the API has a maximum freqncy of 6 requests per minute and can return errors if polled more frequently.
 
+Faxes can sometimes take more than 10 minutes to send, so it is recommended to configure a long-running queue and to push your fax notifications to that queue. More information on configuring long-running queues can be found [here](https://medium.com/@williamvicary/long-running-jobs-with-laravel-horizon-7655e34752f7).
+
 The `services.interfax.chunk_size` configuration setting is the maximum file size before the InterFAX core SDK starts chunking files. The default chunk size is 1048576. When chunking, an `\Interfax\Document` object is created, but the `/outbound/documents` endpoint does not exist for the PCI-DSS-compliant API. If `services.interfax.pci` is set to `true`, it is recommended to increase the chunk size to avoid 404 errors.
 
 ## Usage
