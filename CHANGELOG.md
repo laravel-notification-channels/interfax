@@ -2,6 +2,10 @@
 
 All notable changes to the `InterFAX notification channel` will be documented in this file.
 
+## 2.4.0 - 2022-04-12
+
+- Add Laravel 9 support
+
 ## 2.3.0 - 2022-01-18
 
 - Add functionality for overriding default file size where fax documents start chunking
