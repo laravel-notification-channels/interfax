@@ -37,7 +37,7 @@ class InterfaxChannelTest extends TestCase
     /** @test */
     public function it_can_send_notification_with_a_single_file()
     {
-        $this->interfax->shouldReceive('deliver')
+        $this->interfax->expects('deliver')
             ->once()
             ->with([
                 'faxNumber' => '12345678901',
@@ -57,7 +57,7 @@ class InterfaxChannelTest extends TestCase
     /** @test */
     public function it_can_send_notification_with_files()
     {
-        $this->interfax->shouldReceive('deliver')
+        $this->interfax->expects('deliver')
             ->once()
             ->with([
                 'faxNumber' => '12345678901',
@@ -83,7 +83,7 @@ class InterfaxChannelTest extends TestCase
     /** @test */
     public function it_can_send_notification_pdf_as_stream()
     {
-        $this->interfax->shouldReceive('deliver')
+        $this->interfax->expects('deliver')
             ->with(Mockery::on(function ($output) {
                 if ($output['faxNumber'] !== '12345678901') {
                     return false;
@@ -117,7 +117,7 @@ class InterfaxChannelTest extends TestCase
 
         app('filesystem')->put($filename, '<html><body><h1>Test file contents</h1></body></html>');
 
-        $this->interfax->shouldReceive('deliver')
+        $this->interfax->expects('deliver')
             ->with(Mockery::on(function ($output) {
                 if ($output['faxNumber'] !== '12345678901') {
                     return false;
@@ -153,7 +153,8 @@ class InterfaxChannelTest extends TestCase
     public function it_can_refresh_the_file_response()
     {
         $this->resource
-             ->shouldReceive('refresh')
+             ->expects('refresh')
+             ->times(3)
              ->andReturn((object) [
                  'status' => -1,
              ], (object) [
@@ -161,7 +162,7 @@ class InterfaxChannelTest extends TestCase
              ]);
 
         $this->interfax
-             ->shouldReceive('deliver')
+             ->expects('deliver')
              ->andReturn($this->resource);
 
         $this->channel->send(new TestNotifiable, new TestNotificationWithRefresh);
@@ -175,15 +176,16 @@ class InterfaxChannelTest extends TestCase
         $testResource = new TestResource;
 
         $this->resource
-             ->shouldReceive('refresh')
+             ->expects('refresh')
+             ->times(2)
              ->andReturn($testResource);
 
         $this->resource
-             ->shouldReceive('attributes')
+             ->expects('attributes')
              ->andReturn($testResource->attributes());
 
         $this->interfax
-             ->shouldReceive('deliver')
+             ->expects('deliver')
              ->andReturn($this->resource);
 
         $this->channel->send(new TestNotifiable, new TestNotificationWithRefresh);
