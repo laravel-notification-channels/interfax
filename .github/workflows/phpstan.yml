@@ -1,0 +1,19 @@
+name: PHPStan
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+
+      - name: PHPStan Static Analysis
+        uses: php-actions/phpstan@v3
+        with:
+          path: src/
+          php_version: 8.2
+          level: 5
