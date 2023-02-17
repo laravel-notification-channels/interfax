@@ -68,8 +68,9 @@ To use this package, you can create a notification class, like `DocumentWasSent`
 <?php
 use NotificationChannels\Interfax\InterfaxChannel;
 use NotificationChannels\Interfax\InterfaxMessage;
+use NotificationChannels\Interfax\Contracts\InterfaxNotificationContract;
 
-class DocumentWasSent extends Notification
+class DocumentWasSent extends Notification implements InterfaxNotificationContract
 {
 
     protected $files;
@@ -90,7 +91,7 @@ class DocumentWasSent extends Notification
         return [InterfaxChannel::class];
     }
 
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         return (new InterfaxMessage)
               ->files($this->files);
