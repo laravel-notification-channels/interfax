@@ -6,13 +6,13 @@ use Illuminate\Support\Arr;
 
 class InterfaxMessage
 {
-    protected $files;
+    protected array $files;
     protected $stream;
-    protected $filename;
-    protected $method;
+    protected string $filename;
+    protected string $method;
     protected $statusCheck = false;
     public $user;
-    public $metadata = [];
+    public array $metadata = [];
 
     const FILES = 'files';
     const STREAM = 'stream';
@@ -30,7 +30,7 @@ class InterfaxMessage
         return $this;
     }
 
-    public function files(array $files)
+    public function files(array $files): InterfaxMessage
     {
         $this->files = $files;
         $this->method = static::FILES;
@@ -38,7 +38,7 @@ class InterfaxMessage
         return $this;
     }
 
-    public function stream($stream, string $filename)
+    public function stream($stream, string $filename): InterfaxMessage
     {
         $this->stream = $stream;
         $this->filename = $filename;
@@ -65,7 +65,7 @@ class InterfaxMessage
      * @param  mixed  $notifiable  The user to notify
      * @return InterfaxMessage
      */
-    public function user($notifiable)
+    public function user($notifiable): InterfaxMessage
     {
         $this->user = $notifiable;
 
@@ -78,7 +78,7 @@ class InterfaxMessage
      * @param  array  $data  The data to add to the metadata array
      * @return InterfaxMessage
      */
-    public function addMetadata(array $data)
+    public function addMetadata(array $data): InterfaxMessage
     {
         foreach ($data as $key => $value) {
             $this->metadata[$key] = $value;

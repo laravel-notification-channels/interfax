@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Interfax;
 
-use Illuminate\Notifications\Notification;
 use Interfax\Client;
+use NotificationChannels\Interfax\Contracts\InterfaxNotificationContract;
 use NotificationChannels\Interfax\Exceptions\CouldNotSendNotification;
 
 class InterfaxChannel
@@ -20,11 +20,11 @@ class InterfaxChannel
      * Send the given notification.
      *
      * @param  mixed  $notifiable
-     * @param  \Illuminate\Notifications\Notification  $notification
+     * @param  \NotificationChannels\Interfax\Contracts\InterfaxNotificationContract  $notification
      *
      * @throws \NotificationChannels\Interfax\Exceptions\CouldNotSendNotification
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, InterfaxNotificationContract $notification)
     {
         if (! $faxNumber = $notifiable->routeNotificationFor('interfax')) {
             return;

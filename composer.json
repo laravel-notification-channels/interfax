@@ -22,6 +22,7 @@
         "mockery/mockery": "^1.0",
         "mpdf/mpdf": "^8.0",
         "orchestra/testbench": "^7.0|^8.0",
+        "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5.10|^10.0"
     },
     "autoload": {
@@ -38,7 +39,8 @@
         "test": [
             "@putenv XDEBUG_MODE=coverage",
             "vendor/bin/phpunit"
-        ]
+        ],
+        "phpstan": "vendor/bin/phpstan analyse src --level=5"
     },
     "config": {
         "sort-packages": true

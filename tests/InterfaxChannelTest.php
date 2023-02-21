@@ -7,6 +7,7 @@ use Interfax\Client as InterfaxClient;
 use Interfax\Resource as InterfaxResource;
 use Mockery;
 use NotificationChannels\Interfax\Exceptions\CouldNotSendNotification;
+use NotificationChannels\Interfax\Contracts\InterfaxNotificationContract;
 use NotificationChannels\Interfax\InterfaxChannel;
 use NotificationChannels\Interfax\InterfaxMessage;
 
@@ -192,7 +193,7 @@ class InterfaxChannelTest extends TestCase
     }
 }
 
-class TestNotificationWithSingleFile extends Notification
+class TestNotificationWithSingleFile extends Notification implements InterfaxNotificationContract
 {
     /**
      * @param $notifiable
@@ -200,7 +201,7 @@ class TestNotificationWithSingleFile extends Notification
      *
      * @throws CouldNotSendNotification
      */
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         return (new InterfaxMessage)
                     ->user($notifiable)
@@ -208,7 +209,7 @@ class TestNotificationWithSingleFile extends Notification
     }
 }
 
-class TestNotificationWithFiles extends Notification
+class TestNotificationWithFiles extends Notification implements InterfaxNotificationContract
 {
     /**
      * @param $notifiable
@@ -216,7 +217,7 @@ class TestNotificationWithFiles extends Notification
      *
      * @throws CouldNotSendNotification
      */
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         return (new InterfaxMessage)
                     ->user($notifiable)
@@ -224,7 +225,7 @@ class TestNotificationWithFiles extends Notification
     }
 }
 
-class TestNotificationAsStreamPdf extends Notification
+class TestNotificationAsStreamPdf extends Notification implements InterfaxNotificationContract
 {
     /**
      * @param $notifiable
@@ -232,7 +233,7 @@ class TestNotificationAsStreamPdf extends Notification
      *
      * @throws CouldNotSendNotification
      */
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         $path = app('filesystem')->path('test-file.pdf');
 
@@ -242,7 +243,7 @@ class TestNotificationAsStreamPdf extends Notification
     }
 }
 
-class TestNotificationAsStreamHtml extends Notification
+class TestNotificationAsStreamHtml extends Notification implements InterfaxNotificationContract
 {
     /**
      * @param $notifiable
@@ -250,7 +251,7 @@ class TestNotificationAsStreamHtml extends Notification
      *
      * @throws CouldNotSendNotification
      */
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         $path = app('filesystem')->path('test-file.html');
 
@@ -260,7 +261,7 @@ class TestNotificationAsStreamHtml extends Notification
     }
 }
 
-class TestNotificationWithRefresh extends Notification
+class TestNotificationWithRefresh extends Notification implements InterfaxNotificationContract
 {
     /**
      * @param $notifiable
@@ -268,7 +269,7 @@ class TestNotificationWithRefresh extends Notification
      *
      * @throws CouldNotSendNotification
      */
-    public function toInterfax($notifiable)
+    public function toInterfax($notifiable): InterfaxMessage
     {
         return (new InterfaxMessage)
                     ->checkStatus()

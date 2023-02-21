@@ -1,0 +1,29 @@
+name: PHPStan
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --prefer-source --no-interaction --no-progress
+
+      - name: PHPStan Static Analysis
+        uses: php-actions/phpstan@v3
+        with:
+          path: src/
+          php_version: 8.2
+          php_extensions: gd
+          level: 5

@@ -10,7 +10,7 @@ class CouldNotSendNotification extends Exception
     protected $interfaxMessage;
     protected $responseAttributes;
 
-    public function __construct($message, $code, Exception $previous = null, InterfaxMessage $interfaxMessage, array $responseAttributes)
+    final public function __construct(string $message, int $code, Exception $previous = null, InterfaxMessage $interfaxMessage, array $responseAttributes)
     {
         parent::__construct($message, $code, $previous);
 
