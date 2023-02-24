@@ -2,6 +2,12 @@
 
 All notable changes to the `InterFAX notification channel` will be documented in this file.
 
+## 3.0.0 - 2023-02-24
+
+- Add Laravel 10 support
+- Drop support for EOL versions of PHP (7.2-7.4) & Laravel (6.x, 7.x, 8.x)
+- Add stronger typing based on recommendations from PHPStan
+
 ## 2.4.0 - 2022-04-12
 
 - Add Laravel 9 support
