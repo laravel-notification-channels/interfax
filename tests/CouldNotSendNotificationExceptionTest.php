@@ -2,7 +2,6 @@
 
 namespace NotificationChannels\Interfax\Test;
 
-use PHPUnit\Framework\Attributes\Test;
 use NotificationChannels\Interfax\Exceptions\CouldNotSendNotification;
 use NotificationChannels\Interfax\InterfaxMessage;
 
@@ -20,8 +19,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
                             ->file('test-file.pdf');
     }
 
-    #[Test]
-    public function it_can_get_the_exception_user()
+    public function test_get_the_exception_user()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -31,8 +29,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertInstanceOf(TestNotifiable::class, $exception->getUser());
     }
 
-    #[Test]
-    public function it_can_get_the_exception_metadata()
+    public function test_get_the_exception_metadata()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -42,8 +39,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame('Some sample metadata.', $exception->getMetadata()['key']);
     }
 
-    #[Test]
-    public function it_can_get_the_default_exception_message()
+    public function test_get_the_default_exception_message()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -53,8 +49,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame('The fax failed to send via InterFAX.', $exception->getMessage());
     }
 
-    #[Test]
-    public function it_can_get_a_custom_exception_message()
+    public function test_get_a_custom_exception_message()
     {
         $exceptionMessage = 'This is a test.';
 
@@ -66,8 +61,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame($exceptionMessage, $exception->getMessage());
     }
 
-    #[Test]
-    public function it_can_get_the_exception_attributes()
+    public function test_get_the_exception_attributes()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
