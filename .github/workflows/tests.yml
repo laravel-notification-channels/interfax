@@ -38,5 +38,8 @@ jobs:
           php_extensions: gd
           command: update
 
+      - name: Set ownership of vendor directory
+        run: sudo chown -R $(id -u):$(id -g) ./vendor
+
       - name: Execute tests
         run: vendor/bin/phpunit --no-coverage
