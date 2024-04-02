@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.3
           tools: composer:v2
           coverage: none
 
@@ -25,5 +25,5 @@ jobs:
         with:
           path: src/
           configuration: phpstan.neon
-          php_version: 8.2
+          php_version: 8.3
           php_extensions: gd
