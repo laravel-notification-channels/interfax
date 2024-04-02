@@ -35,8 +35,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel = new InterfaxChannel($this->interfax);
     }
 
-    /** @test */
-    public function it_can_send_notification_with_a_single_file()
+    public function test_send_notification_with_a_single_file()
     {
         $this->interfax->expects('deliver')
             ->once()
@@ -55,8 +54,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithSingleFile);
     }
 
-    /** @test */
-    public function it_can_send_notification_with_files()
+    public function test_send_notification_with_files()
     {
         $this->interfax->expects('deliver')
             ->once()
@@ -81,8 +79,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithFiles);
     }
 
-    /** @test */
-    public function it_can_send_notification_pdf_as_stream()
+    public function test_send_notification_pdf_as_stream()
     {
         $this->interfax->expects('deliver')
             ->with(Mockery::on(function ($output) {
@@ -110,8 +107,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationAsStreamPdf);
     }
 
-    /** @test */
-    public function it_can_send_notification_html_as_stream()
+    public function test_send_notification_html_as_stream()
     {
         $filename = 'test-file.html';
         $this->addFile($filename);
@@ -144,14 +140,12 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationAsStreamHtml);
     }
 
-    /** @test */
-    public function it_can_return_early_when_no_fax_number_provided()
+    public function test_return_early_when_no_fax_number_provided()
     {
         $this->assertNull($this->channel->send(new TestNotifiableNotSendable, new TestNotificationWithFiles));
     }
 
-    /** @test */
-    public function it_can_refresh_the_file_response()
+    public function test_refresh_the_file_response()
     {
         $this->resource
              ->expects('refresh')
@@ -169,8 +163,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithRefresh);
     }
 
-    /** @test */
-    public function it_can_throw_the_exception()
+    public function test_throw_the_exception()
     {
         $this->expectException(CouldNotSendNotification::class);
 

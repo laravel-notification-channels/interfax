@@ -19,8 +19,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
                             ->file('test-file.pdf');
     }
 
-    /** @test */
-    public function it_can_get_the_exception_user()
+    public function test_get_the_exception_user()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -30,8 +29,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertInstanceOf(TestNotifiable::class, $exception->getUser());
     }
 
-    /** @test */
-    public function it_can_get_the_exception_metadata()
+    public function test_get_the_exception_metadata()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -41,8 +39,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame('Some sample metadata.', $exception->getMetadata()['key']);
     }
 
-    /** @test */
-    public function it_can_get_the_default_exception_message()
+    public function test_get_the_default_exception_message()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,
@@ -52,8 +49,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame('The fax failed to send via InterFAX.', $exception->getMessage());
     }
 
-    /** @test */
-    public function it_can_get_a_custom_exception_message()
+    public function test_get_a_custom_exception_message()
     {
         $exceptionMessage = 'This is a test.';
 
@@ -65,8 +61,7 @@ class CouldNotSendNotificationExceptionTest extends TestCase
         $this->assertSame($exceptionMessage, $exception->getMessage());
     }
 
-    /** @test */
-    public function it_can_get_the_exception_attributes()
+    public function test_get_the_exception_attributes()
     {
         $exception = CouldNotSendNotification::serviceRespondedWithAnError($this->message, [
             'status' => 500,

@@ -7,23 +7,40 @@ on:
 jobs:
   phpstan:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3]
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: none
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.lock', '*/composer.lock') }}
+
       - name: Install dependencies
-        run: composer update --prefer-source --no-interaction --no-progress
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.php }}
+          php_extensions: gd
+          command: update
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v3
         with:
           path: src/
           configuration: phpstan.neon
-          php_version: 8.2
+          php_version: ${{ matrix.php }}
           php_extensions: gd

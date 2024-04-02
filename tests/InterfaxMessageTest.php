@@ -6,8 +6,7 @@ use NotificationChannels\Interfax\InterfaxMessage;
 
 class InterfaxMessageTest extends TestCase
 {
-    /** @test */
-    public function it_should_check_the_status_via_refresh()
+    public function test_check_the_status_via_refresh()
     {
         $message = (new InterfaxMessage)
                         ->checkStatus()
@@ -17,8 +16,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertTrue($message->shouldCheckStatus());
     }
 
-    /** @test */
-    public function it_should_not_check_the_status_via_refresh_manual()
+    public function test_not_check_the_status_via_refresh_manual()
     {
         $message = (new InterfaxMessage)
                         ->checkStatus(false)
@@ -28,8 +26,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertFalse($message->shouldCheckStatus());
     }
 
-    /** @test */
-    public function it_should_not_check_the_status_via_refresh_default()
+    public function test_not_check_the_status_via_refresh_default()
     {
         $message = (new InterfaxMessage)
                         ->user(new TestNotifiable)
@@ -38,8 +35,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertFalse($message->shouldCheckStatus());
     }
 
-    /** @test */
-    public function it_should_set_the_file_chunk_size_filename()
+    public function test_set_the_file_chunk_size_filename()
     {
         $this->increaseChunkSize();
 
@@ -53,8 +49,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertSame($this->chunkSize, $this->getChunkSize($delivery));
     }
 
-    /** @test */
-    public function it_should_set_the_file_chunk_size_file_array()
+    public function test_set_the_file_chunk_size_file_array()
     {
         $this->increaseChunkSize();
 
@@ -68,8 +63,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertSame($this->chunkSize, $this->getChunkSize($delivery));
     }
 
-    /** @test */
-    public function it_should_set_the_file_chunk_size_file_object()
+    public function test_set_the_file_chunk_size_file_object()
     {
         $this->increaseChunkSize();
         $client = new \Interfax\Client;
