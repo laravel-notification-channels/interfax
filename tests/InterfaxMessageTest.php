@@ -2,11 +2,12 @@
 
 namespace NotificationChannels\Interfax\Test;
 
+use PHPUnit\Framework\Attributes\Test;
 use NotificationChannels\Interfax\InterfaxMessage;
 
 class InterfaxMessageTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_should_check_the_status_via_refresh()
     {
         $message = (new InterfaxMessage)
@@ -17,7 +18,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertTrue($message->shouldCheckStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_not_check_the_status_via_refresh_manual()
     {
         $message = (new InterfaxMessage)
@@ -28,7 +29,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertFalse($message->shouldCheckStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_not_check_the_status_via_refresh_default()
     {
         $message = (new InterfaxMessage)
@@ -38,7 +39,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertFalse($message->shouldCheckStatus());
     }
 
-    /** @test */
+    #[Test]
     public function it_should_set_the_file_chunk_size_filename()
     {
         $this->increaseChunkSize();
@@ -53,7 +54,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertSame($this->chunkSize, $this->getChunkSize($delivery));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_set_the_file_chunk_size_file_array()
     {
         $this->increaseChunkSize();
@@ -68,7 +69,7 @@ class InterfaxMessageTest extends TestCase
         $this->assertSame($this->chunkSize, $this->getChunkSize($delivery));
     }
 
-    /** @test */
+    #[Test]
     public function it_should_set_the_file_chunk_size_file_object()
     {
         $this->increaseChunkSize();

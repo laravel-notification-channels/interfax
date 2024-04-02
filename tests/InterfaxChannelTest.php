@@ -3,6 +3,7 @@
 namespace NotificationChannels\Interfax\Test;
 
 use Illuminate\Notifications\Notification;
+use PHPUnit\Framework\Attributes\Test;
 use Interfax\Client as InterfaxClient;
 use Interfax\Resource as InterfaxResource;
 use Mockery;
@@ -35,7 +36,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel = new InterfaxChannel($this->interfax);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_notification_with_a_single_file()
     {
         $this->interfax->expects('deliver')
@@ -55,7 +56,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithSingleFile);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_notification_with_files()
     {
         $this->interfax->expects('deliver')
@@ -81,7 +82,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithFiles);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_notification_pdf_as_stream()
     {
         $this->interfax->expects('deliver')
@@ -110,7 +111,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationAsStreamPdf);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_notification_html_as_stream()
     {
         $filename = 'test-file.html';
@@ -144,13 +145,13 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationAsStreamHtml);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_early_when_no_fax_number_provided()
     {
         $this->assertNull($this->channel->send(new TestNotifiableNotSendable, new TestNotificationWithFiles));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_refresh_the_file_response()
     {
         $this->resource
@@ -169,7 +170,7 @@ class InterfaxChannelTest extends TestCase
         $this->channel->send(new TestNotifiable, new TestNotificationWithRefresh);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_throw_the_exception()
     {
         $this->expectException(CouldNotSendNotification::class);
