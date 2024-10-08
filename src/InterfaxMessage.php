@@ -6,12 +6,17 @@ use Illuminate\Support\Arr;
 
 class InterfaxMessage
 {
+    /** @var array<int, InterfaxFile|string|array<string, mixed>> */
     protected array $files;
+
+    /** @var resource|false $stream */
     protected $stream;
     protected string $filename;
     protected string $method;
-    protected $statusCheck = false;
-    public $user;
+    protected bool $statusCheck = false;
+    public mixed $user;
+
+    /** @var array<string, mixed> */
     public array $metadata = [];
 
     const FILES = 'files';
@@ -20,9 +25,9 @@ class InterfaxMessage
     const POLLING_INTERVAL_DEFAULT = 15;
     const POLLING_INTERVAL_MINIMUM = 10;
 
-    protected static $DEFAULT_CHUNK_SIZE = 1048576;
+    protected static int $DEFAULT_CHUNK_SIZE = 1048576;
 
-    public function file(string $file)
+    public function file(string $file): InterfaxMessage
     {
         $this->files = Arr::wrap($file);
         $this->method = static::FILES;
@@ -30,6 +35,10 @@ class InterfaxMessage
         return $this;
     }
 
+    /**
+     * @param  array<int, array<string, mixed>>  $files
+     * @return InterfaxMessage
+     */
     public function files(array $files): InterfaxMessage
     {
         $this->files = $files;
@@ -38,6 +47,11 @@ class InterfaxMessage
         return $this;
     }
 
+    /**
+     * @param  resource|false $stream
+     * @param  string $filename
+     * @return InterfaxMessage
+     */
     public function stream($stream, string $filename): InterfaxMessage
     {
         $this->stream = $stream;
@@ -47,10 +61,9 @@ class InterfaxMessage
         return $this;
     }
 
-    public function checkStatus(bool $shouldCheck = true)
+    public function checkStatus(bool $shouldCheck = true): InterfaxMessage
     {
         $this->statusCheck = $shouldCheck;
-
         return $this;
     }
 
@@ -68,14 +81,13 @@ class InterfaxMessage
     public function user($notifiable): InterfaxMessage
     {
         $this->user = $notifiable;
-
         return $this;
     }
 
     /**
      * Add metadata to the message for logging purposes.
      *
-     * @param  array  $data  The data to add to the metadata array
+     * @param  array<string, mixed>  $data  The data to add to the metadata array
      * @return InterfaxMessage
      */
     public function addMetadata(array $data): InterfaxMessage
@@ -87,6 +99,9 @@ class InterfaxMessage
         return $this;
     }
 
+    /**
+     * @return array<int, InterfaxFile|array<string, mixed>>|array<int, array<int, mixed>>
+     */
     public function makeFiles(): array
     {
         if ($this->method === static::STREAM) {
@@ -102,7 +117,7 @@ class InterfaxMessage
             ];
         }
 
-        return array_map('static::setChunkSize', $this->files);
+        return array_map(fn ($file) => static::setChunkSize($file), $this->files);
     }
 
     public function sleep(): void
@@ -111,7 +126,11 @@ class InterfaxMessage
         sleep(max($interval, static::POLLING_INTERVAL_MINIMUM));
     }
 
-    protected static function setChunkSize($file)
+    /**
+     * @param InterfaxFile|string|array<string, mixed> $file
+     * @return InterfaxFile|array<string, mixed>
+     */
+    protected static function setChunkSize(InterfaxFile|string|array $file): InterfaxFile|array
     {
         $chunk_size = config('services.interfax.chunk_size', static::$DEFAULT_CHUNK_SIZE);
 

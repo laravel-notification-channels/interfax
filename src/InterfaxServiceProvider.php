@@ -7,7 +7,7 @@ use Interfax\Client;
 
 class InterfaxServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->app->when(InterfaxChannel::class)
             ->needs(Client::class)
