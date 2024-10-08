@@ -7,8 +7,8 @@ class InterfaxFile extends \Interfax\File
     /**
      * File constructor.
      *
-     * @param $location
-     * @param  array  $params
+     * @param  resource|string $location
+     * @param  array<string, mixed>  $params
      *
      * @throws \InvalidArgumentException
      */

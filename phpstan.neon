@@ -3,4 +3,12 @@ parameters:
     paths:
         - src/
 
-    level: 5
+    level: 8
+
+    ignoreErrors:
+        -
+            identifier: ternary.alwaysTrue
+            path: src/InterfaxChannel.php
+
+    stubFiles:
+        - stubs/Resource.stub

@@ -8,13 +8,10 @@ use NotificationChannels\Interfax\Exceptions\CouldNotSendNotification;
 
 class InterfaxChannel
 {
-    protected $client;
+    /** @var \Interfax\Outbound\Fax $fax */
     protected $fax;
 
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
+    public function __construct(protected Client $client) {}
 
     /**
      * Send the given notification.
@@ -24,7 +21,7 @@ class InterfaxChannel
      *
      * @throws \NotificationChannels\Interfax\Exceptions\CouldNotSendNotification
      */
-    public function send($notifiable, InterfaxNotificationContract $notification)
+    public function send($notifiable, InterfaxNotificationContract $notification): void
     {
         if (! $faxNumber = $notifiable->routeNotificationFor('interfax')) {
             return;
@@ -41,11 +38,11 @@ class InterfaxChannel
             if ($message->shouldCheckStatus()) {
                 $message->sleep();
 
-                while ($this->fax->refresh()->status < 0) {
+                while ($this->getStatus() < 0) {
                     $message->sleep();
                 }
 
-                if ($this->fax->refresh()->status > 0) {
+                if ($this->getStatus() > 0) {
                     throw CouldNotSendNotification::serviceRespondedWithAnError($message, $this->fax->attributes());
                 }
             }
@@ -55,5 +52,11 @@ class InterfaxChannel
 
             throw CouldNotSendNotification::serviceRespondedWithAnError($message, $attributes, $exceptionMessage);
         }
+    }
+
+    protected function getStatus(): int
+    {
+        $fax = $this->fax->refresh();
+        return $fax->status;
     }
 }
