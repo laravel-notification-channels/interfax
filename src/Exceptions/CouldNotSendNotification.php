@@ -3,6 +3,7 @@
 namespace NotificationChannels\Interfax\Exceptions;
 
 use Exception;
+use Throwable;
 use NotificationChannels\Interfax\InterfaxMessage;
 
 class CouldNotSendNotification extends Exception
@@ -13,21 +14,6 @@ class CouldNotSendNotification extends Exception
     protected array $responseAttributes;
 
     /**
-     * @param string          $message
-     * @param int             $code
-     * @param Exception|null  $previous
-     * @param InterfaxMessage $interfaxMessage
-     * @param array<string, mixed>    $responseAttributes
-     */
-    final public function __construct(string $message, int $code, Exception $previous = null, InterfaxMessage $interfaxMessage, array $responseAttributes)
-    {
-        parent::__construct($message, $code, $previous);
-
-        $this->interfaxMessage = $interfaxMessage;
-        $this->responseAttributes = $responseAttributes;
-    }
-
-    /**
      * @param  InterfaxMessage $message
      * @param  array<string, mixed> $responseAttributes
      * @param  string          $exceptionMessage
@@ -35,7 +21,27 @@ class CouldNotSendNotification extends Exception
      */
     public static function serviceRespondedWithAnError(InterfaxMessage $message, array $responseAttributes, string $exceptionMessage = 'The fax failed to send via InterFAX.')
     {
-        return new static($exceptionMessage, $responseAttributes['status'], null, $message, $responseAttributes);
+        $exception = new self($exceptionMessage, $responseAttributes['status'], null);
+        $exception->setInterfaxMessage($message);
+        $exception->setResponseAttributes($responseAttributes);
+
+        return $exception;
+    }
+
+    /**
+     * @param InterfaxMessage $interfaxMessage
+     */
+    public function setInterfaxMessage(InterfaxMessage $interfaxMessage): void
+    {
+        $this->interfaxMessage = $interfaxMessage;
+    }
+
+    /**
+     * @param array<string, mixed> $responseAttributes
+     */
+    public function setResponseAttributes(array $responseAttributes): void
+    {
+        $this->responseAttributes = $responseAttributes;
     }
 
     /**
